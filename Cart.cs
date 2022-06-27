@@ -8,7 +8,13 @@ public class Cart : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float vehicalWidth;
 
+    [Header("Wheels")]
+    [SerializeField] private Transform[] wheels;
+    [SerializeField] private float wheelRadius;
+
     private Vector3 movementTarget;
+    private float deltaMovement;
+    private float lastPositionX;
 
     private void Start()
     {
@@ -18,11 +24,27 @@ public class Cart : MonoBehaviour
     private void Update()
     {
         Move();
+
+        RotateWheel();
     }
 
     private void Move()
     {
+        lastPositionX = transform.position.x;
+
         transform.position = Vector3.MoveTowards(transform.position, movementTarget, movementSpeed * Time.deltaTime);
+
+        deltaMovement = transform.position.x - lastPositionX;
+    }
+
+    private void RotateWheel()
+    {
+        float angle = (180 * deltaMovement) / (Mathf.PI * wheelRadius * 2);
+
+        for(int i = 0; i < wheels.Length; i++)
+        {
+            wheels[i].Rotate(new Vector3(0, 0, -angle));
+        }
     }
 
     public void SetMovementTarget(Vector3 target)
@@ -32,8 +54,8 @@ public class Cart : MonoBehaviour
 
     private Vector3 ClampMovementTarget(Vector3 target)
     {
-        float leftBorder = -8.8f + vehicalWidth * 0.5f;
-        float rightBorder = 8.8f - vehicalWidth * 0.5f;
+        float leftBorder = LevelBoundary.Instance.LeftBorder + vehicalWidth * 0.5f;
+        float rightBorder = LevelBoundary.Instance.RightBorder - vehicalWidth * 0.5f;
 
         Vector3 movTarget = target;
         movTarget.z = transform.position.z;
