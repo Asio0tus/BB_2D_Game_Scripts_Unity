@@ -9,8 +9,13 @@ public class Turret : MonoBehaviour
     [SerializeField] private float fireRate;
     [SerializeField] private int projectileAmount;
     [SerializeField] private float projectileInterval;
+    [SerializeField] private int damage;
 
     private float timer;
+
+    public int Damage => damage;
+    public int ProjectileAmount => projectileAmount;
+    public float FireRate => fireRate;
 
     private void Update()
     {
@@ -23,7 +28,8 @@ public class Turret : MonoBehaviour
 
         for(int i = 0; i < projectileAmount; i++)
         {
-            Instantiate(projectilePrefab, new Vector3(startPosX + i * projectileInterval, shootPoint.position.y, shootPoint.position.z), Quaternion.identity);
+            Projectile projectile = Instantiate(projectilePrefab, new Vector3(startPosX + i * projectileInterval, shootPoint.position.y, shootPoint.position.z), Quaternion.identity);
+            projectile.SetDamage(damage);
         }
         
     }
