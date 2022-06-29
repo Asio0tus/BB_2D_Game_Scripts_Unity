@@ -13,7 +13,7 @@ public class Cart : MonoBehaviour
     [SerializeField] private Transform[] wheels;
     [SerializeField] private float wheelRadius;
 
-    [HideInInspector] public UnityEvent CollisionStone;
+    [HideInInspector] public UnityEvent CollisionStone;    
 
     private Vector3 movementTarget;
     private float deltaMovement;
@@ -38,7 +38,7 @@ public class Cart : MonoBehaviour
         if(stone != null)
         {
             CollisionStone.Invoke();
-        }
+        }        
     }
 
     private void Move()
