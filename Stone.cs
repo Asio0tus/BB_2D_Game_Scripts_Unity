@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(StoneMovement))]
 public class Stone : Destructible
 {
@@ -17,9 +18,12 @@ public class Stone : Destructible
     [SerializeField] private float spawnUpForce;
 
     [SerializeField] private Coin coinPrefab;
+    
 
     private StoneMovement movement;
-    
+
+    public int getSize => (int)size;
+       
 
     private void Awake()
     {
@@ -27,6 +31,7 @@ public class Stone : Destructible
 
         movement = GetComponent<StoneMovement>();
         SetSize(size);
+        
     }
 
     private void OnDestroy()
@@ -39,8 +44,14 @@ public class Stone : Destructible
         if(size != Size.Small)
         {
             SpawnStones();
+        } 
+        
+        if(size == Size.Small)
+        {
+            UIProgressPanel progressPanel = FindObjectOfType<UIProgressPanel>();
+            progressPanel.OnFillProgressPanel();
         }
-
+        
         int chanseToSpawnCoin = Random.Range(1, 7);
         if (chanseToSpawnCoin > 4) coinPrefab.Spawn(transform.position);
                 

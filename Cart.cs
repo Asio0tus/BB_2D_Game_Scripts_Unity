@@ -7,7 +7,7 @@ public class Cart : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float vehicalWidth;
+    [SerializeField] private float vehicleWidth;
 
     [Header("Wheels")]
     [SerializeField] private Transform[] wheels;
@@ -67,8 +67,8 @@ public class Cart : MonoBehaviour
 
     private Vector3 ClampMovementTarget(Vector3 target)
     {
-        float leftBorder = LevelBoundary.Instance.LeftBorder + vehicalWidth * 0.5f;
-        float rightBorder = LevelBoundary.Instance.RightBorder - vehicalWidth * 0.5f;
+        float leftBorder = LevelBoundary.Instance.LeftBorder + vehicleWidth * 0.5f;
+        float rightBorder = LevelBoundary.Instance.RightBorder - vehicleWidth * 0.5f;
 
         Vector3 movTarget = target;
         movTarget.z = transform.position.z;
@@ -84,7 +84,11 @@ public class Cart : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawLine(transform.position - new Vector3(vehicalWidth * 0.5f, 0.5f, 0), transform.position + new Vector3(vehicalWidth * 0.5f, -0.5f, 0));
+        Gizmos.DrawLine(transform.position - new Vector3(vehicleWidth * 0.5f, 0.5f, 0), transform.position + new Vector3(vehicleWidth * 0.5f, -0.5f, 0));
     }
 #endif
+
+    
+
+    
 }

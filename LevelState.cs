@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelState : MonoBehaviour
 {
@@ -14,9 +15,12 @@ public class LevelState : MonoBehaviour
 
     private float timer;
     private bool checkPassed;
+    [HideInInspector] public int currentLevel;
+
+    public int CurrentLevel => currentLevel;
 
     private void Awake()
-    {
+    {       
         cart.CollisionStone.AddListener(OnCartCollisionStone);
         stoneSpawner.Completed.AddListener(OnSpawnCompleted);
     }
@@ -47,11 +51,35 @@ public class LevelState : MonoBehaviour
             {
                 if (FindObjectsOfType<Stone>().Length == 0)
                 {
-                    Passed.Invoke();
+                    Passed.Invoke();                                        
                 }
             }
 
             timer = 0;
         }        
     }
+
+    public void SetNextLevel()
+    {
+        currentLevel++;
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", currentLevel);        
+    }
+
+    public void Load()
+    {
+        currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+
+        Debug.Log("loadlevelnumber");
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteAll();        
+    }
+
+
 }

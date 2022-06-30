@@ -12,14 +12,18 @@ public class StoneSpawner : MonoBehaviour
 
     [Header("Balance")]
     [SerializeField] private Turret turret;
-    [SerializeField] private int stoneAmount;    
+    [SerializeField] private int stoneAmountDefault;
     [SerializeField] [Range(0.0f, 1.0f)] private float minHitpointsPercentage;
     [SerializeField] private float maxHitpointsRate;
+    [SerializeField] private LevelState levelState;
+
+    [SerializeField] private UIProgressPanel progressPanel;
 
     [Space(10)] public UnityEvent Completed;
 
     private Color32[] stoneColor;
 
+    private int stoneAmount;
     private float timer;
     private int amountSpawned;
     private int stoneMaxHitpoint;
@@ -27,6 +31,12 @@ public class StoneSpawner : MonoBehaviour
 
     float posZ;
 
+    private float allStoneHP;
+
+    public int StoneAmount => stoneAmount;
+    public int AmountSpawned => amountSpawned;
+    public float AllStoneHP => allStoneHP;
+    public int StoneMaxHitpoint => stoneMaxHitpoint;
 
     private void Start()
     {
@@ -36,7 +46,9 @@ public class StoneSpawner : MonoBehaviour
         stoneMinHitpoint = (int)(stoneMaxHitpoint * minHitpointsPercentage);
 
         timer = spawnRate;
-        
+
+        stoneAmount = stoneAmountDefault + levelState.CurrentLevel;
+
         LoadColor();        
     }
 
@@ -71,7 +83,11 @@ public class StoneSpawner : MonoBehaviour
         stone.GetComponentInChildren<SpriteRenderer>().color = stoneColor[Random.Range(0, 5)];
         stone.transform.position += new Vector3(0, 0, posZ);
 
+        allStoneHP += Mathf.Pow(2, stone.getSize);
+
         amountSpawned++;
+
+        progressPanel.FillStepMath();
     }
 
     private void LoadColor()

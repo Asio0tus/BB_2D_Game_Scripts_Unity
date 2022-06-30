@@ -43,4 +43,23 @@ public class Turret : MonoBehaviour
             timer = 0;
         }
     }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("ProjectileAmount", projectileAmount);
+        PlayerPrefs.SetInt("Damage", damage);
+        PlayerPrefs.SetFloat("FireRate", fireRate);
+    }
+
+    public void Load()
+    {
+        projectileAmount = PlayerPrefs.GetInt("ProjectileAmount", 1);
+        damage = PlayerPrefs.GetInt("Damage", 1);
+        fireRate = PlayerPrefs.GetFloat("FireRate", 0.2f);
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

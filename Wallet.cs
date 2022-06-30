@@ -22,5 +22,19 @@ public class Wallet : MonoBehaviour
         Debug.Log(coinAmount);
     }
 
-    
+    public void Save()
+    {
+        PlayerPrefs.SetInt("CoinAmount", coinAmount);
+    }
+
+    public void Load()
+    {
+        coinAmount = PlayerPrefs.GetInt("CoinAmount", 0);
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
 }
