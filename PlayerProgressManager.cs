@@ -8,7 +8,7 @@ public class PlayerProgressManager : MonoBehaviour
     [SerializeField] LevelState levelState;
     [SerializeField] Wallet wallet;
     [SerializeField] Turret turret;
-
+    [SerializeField] UIMainMenu mainMenu;
 
     private void Awake()
     {
@@ -16,12 +16,16 @@ public class PlayerProgressManager : MonoBehaviour
 
         levelState.Passed.AddListener(Save);
         levelState.Passed.AddListener(SetNextLevel);
+        mainMenu.QuitGame.AddListener(Save);
+        mainMenu.StartPlay.AddListener(Save);
     }
 
     private void OnDestroy()
     {
         levelState.Passed.RemoveListener(Save);
         levelState.Passed.RemoveListener(SetNextLevel);
+        mainMenu.QuitGame.RemoveListener(Save);
+        mainMenu.StartPlay.RemoveListener(Save);
     }
 
     private void Update()
@@ -32,12 +36,12 @@ public class PlayerProgressManager : MonoBehaviour
         }
     }
 
-    private void Save()
+    public void Save()
     {
         levelState.Save();
         wallet.Save();
         turret.Save();
-
+        mainMenu.Save();
     }
 
     private void Load()
@@ -45,8 +49,7 @@ public class PlayerProgressManager : MonoBehaviour
         levelState.Load();
         wallet.Load();
         turret.Load();
-
-        Debug.Log("load");
+        mainMenu.Load();                
     }
 
     private void ResetProgress()

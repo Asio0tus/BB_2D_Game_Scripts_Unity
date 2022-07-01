@@ -14,7 +14,7 @@ public class StoneSpawner : MonoBehaviour
     [SerializeField] private Turret turret;
     [SerializeField] private int stoneAmountDefault;
     [SerializeField] [Range(0.0f, 1.0f)] private float minHitpointsPercentage;
-    [SerializeField] private float maxHitpointsRate;
+    [SerializeField] private int maxHitpointsDefault;
     [SerializeField] private LevelState levelState;
 
     [SerializeField] private UIProgressPanel progressPanel;
@@ -40,10 +40,10 @@ public class StoneSpawner : MonoBehaviour
 
     private void Start()
     {
-        int damagePerSecond = (int)((turret.Damage * turret.ProjectileAmount) * (1 / turret.FireRate));
+        //int damagePerSecond = (int)((turret.Damage * turret.ProjectileAmount) * (1 / turret.FireRate));
 
-        stoneMaxHitpoint = (int)(damagePerSecond * maxHitpointsRate);
-        stoneMinHitpoint = (int)(stoneMaxHitpoint * minHitpointsPercentage);
+        stoneMaxHitpoint = maxHitpointsDefault + (levelState.currentLevel * 5);
+        stoneMinHitpoint = stoneMaxHitpoint / 2;
 
         timer = spawnRate;
 

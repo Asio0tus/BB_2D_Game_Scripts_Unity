@@ -37,8 +37,8 @@ public class UIEndGame : MonoBehaviour
     }
 
     public void RestartLevel()
-    {      
-               
+    {        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);        
     }
 
 

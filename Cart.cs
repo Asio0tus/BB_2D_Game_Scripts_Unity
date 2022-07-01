@@ -13,7 +13,9 @@ public class Cart : MonoBehaviour
     [SerializeField] private Transform[] wheels;
     [SerializeField] private float wheelRadius;
 
-    [HideInInspector] public UnityEvent CollisionStone;    
+    [HideInInspector] public UnityEvent CollisionStone;
+
+    [SerializeField] private ActivateBonus activateBonus;
 
     private Vector3 movementTarget;
     private float deltaMovement;
@@ -35,7 +37,7 @@ public class Cart : MonoBehaviour
     {
         Stone stone = collision.transform.root.GetComponent<Stone>();
 
-        if(stone != null)
+        if(stone != null && activateBonus.ImmortalBonusOn == false)
         {
             CollisionStone.Invoke();
         }        

@@ -18,7 +18,8 @@ public class Stone : Destructible
     [SerializeField] private float spawnUpForce;
 
     [SerializeField] private Coin coinPrefab;
-    
+    [SerializeField] private Bonus bonusPrefab;
+
 
     private StoneMovement movement;
 
@@ -54,6 +55,9 @@ public class Stone : Destructible
         
         int chanseToSpawnCoin = Random.Range(1, 7);
         if (chanseToSpawnCoin > 4) coinPrefab.Spawn(transform.position);
+
+        int chanseToSpawnBonus = Random.Range(1, 30);
+        if (chanseToSpawnBonus > 27) bonusPrefab.Spawn(transform.position);
                 
         Destroy(gameObject);
     }

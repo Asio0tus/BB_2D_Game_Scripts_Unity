@@ -2,53 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Bonus : MonoBehaviour
 {
-            
-    [SerializeField] private Coin coinPrefab;
+    [SerializeField] private Bonus bonusPrefab;
     [SerializeField] private float fallSpeed;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private Transform bonusBackground;
 
-    
-    
+
     private void Update()
     {
         Move();
     }
 
-    public void PickupCoin()
-    {               
+    public void PickupBonus()
+    {
         Destroy(gameObject);
     }
 
     public void Spawn(Vector3 position)
     {
-        Coin coin = Instantiate(coinPrefab, position, Quaternion.identity);        
+        Bonus bonus = Instantiate(bonusPrefab, position, Quaternion.identity);
     }
 
     public void Move()
-    {        
+    {
         transform.position += new Vector3(0, -fallSpeed * Time.deltaTime, 0);
-        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+        bonusBackground.Rotate(0, 0, rotationSpeed * Time.deltaTime);
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        LevelEdge levelEdge = collision.GetComponent<LevelEdge>();
+    {        
         Cart cart = collision.transform.root.GetComponent<Cart>();
-
+        LevelEdge levelEdge = collision.GetComponent<LevelEdge>();
+       
         if (levelEdge != null)
         {
-            if(levelEdge.Type == EdgeType.Bottom)
+            if (levelEdge.Type == EdgeType.Bottom)
             {
                 fallSpeed = 0;
             }
         }
-
-        if(cart != null)
+        if (cart != null)
         {
-            PickupCoin();
+            PickupBonus();
         }
     }
 }

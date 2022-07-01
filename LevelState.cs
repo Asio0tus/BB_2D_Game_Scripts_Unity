@@ -15,6 +15,7 @@ public class LevelState : MonoBehaviour
 
     private float timer;
     private bool checkPassed;
+    private bool checkChangeLevel;
     [HideInInspector] public int currentLevel;
 
     public int CurrentLevel => currentLevel;
@@ -39,19 +40,21 @@ public class LevelState : MonoBehaviour
     private void OnSpawnCompleted()
     {
         checkPassed = true;
+        checkChangeLevel = false;
     }
 
     private void Update()
     {
         timer += Time.deltaTime;
 
-        if(timer > 0.5f)
+        if(timer > 0.5f && checkChangeLevel == false)
         {
             if(checkPassed == true)
             {
                 if (FindObjectsOfType<Stone>().Length == 0)
                 {
-                    Passed.Invoke();                                        
+                    Passed.Invoke();
+                    checkChangeLevel = true;
                 }
             }
 

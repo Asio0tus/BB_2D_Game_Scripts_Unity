@@ -44,6 +44,21 @@ public class Turret : MonoBehaviour
         }
     }
 
+    public void BuyUpgradeProjectileAmount()
+    {
+        projectileAmount++;
+    }
+
+    public void BuyUpgradeProjectileDamage()
+    {
+        damage++;
+    }
+
+    public void BuyUpgradeProjectileFireRate()
+    {
+        fireRate -= 0.1f;
+    }
+
     public void Save()
     {
         PlayerPrefs.SetInt("ProjectileAmount", projectileAmount);
@@ -55,7 +70,7 @@ public class Turret : MonoBehaviour
     {
         projectileAmount = PlayerPrefs.GetInt("ProjectileAmount", 1);
         damage = PlayerPrefs.GetInt("Damage", 1);
-        fireRate = PlayerPrefs.GetFloat("FireRate", 0.2f);
+        fireRate = PlayerPrefs.GetFloat("FireRate", 0.5f);
     }
 
     public void ResetProgress()
